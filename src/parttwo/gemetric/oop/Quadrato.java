@@ -1,6 +1,8 @@
-package parttwo;
+package parttwo.gemetric.oop;
 
-public class Quadrato extends MasterShape{
+import parttwo.gemetric.oop.MasterShape;
+
+public class Quadrato extends MasterShape {
     private double l;
 
     public Quadrato(double l) {

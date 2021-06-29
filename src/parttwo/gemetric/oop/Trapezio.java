@@ -1,6 +1,8 @@
-package parttwo;
+package parttwo.gemetric.oop;
 
-public class Trapezio extends MasterShape{
+import parttwo.gemetric.oop.MasterShape;
+
+public class Trapezio extends MasterShape {
     private double bmin;
     private double bmaj;
     private double height;

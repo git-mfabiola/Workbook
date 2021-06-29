@@ -1,4 +1,4 @@
-package parttwo;
+package parttwo.gemetric.oop;
 
 public class MasterShape {
 

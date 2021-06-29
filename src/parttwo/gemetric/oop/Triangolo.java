@@ -1,6 +1,8 @@
-package parttwo;
+package parttwo.gemetric.oop;
 
-public class Triangolo extends MasterShape{
+import parttwo.gemetric.oop.MasterShape;
+
+public class Triangolo extends MasterShape {
     private double base;
     private double altez;
 

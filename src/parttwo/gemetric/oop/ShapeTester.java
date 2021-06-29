@@ -1,4 +1,4 @@
-package parttwo;
+package parttwo.gemetric.oop;
 
 import java.util.Scanner;
 
