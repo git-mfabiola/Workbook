@@ -30,35 +30,42 @@ public class ToDoApplication {
 
         String input = askInput();
 
-        switch (input) {
-            case "1":
-                System.out.println("1. per priorità");
-                System.out.println("2. per stato");
-                System.out.println("3. per data");
-                input = askInput();
-                switch (input) {
-                    case "1"://invoco metodo
-                break;
-                }
-                break;
-            case "2":
-                System.out.println("1. aggiungi");
-                System.out.println("2. modifica");
-                System.out.println("3. rimuovi");
-                switch (input){
+        while (true) {
+            switch (input) {
+                case "1":
+                    System.out.println("1. per priorità");
+                    System.out.println("2. per stato");
+                    System.out.println("3. per data");
+                    input = askInput();
+                    switch (input) {
+                        case "1"://invoco metodo
+                            break;
+                        case "2"://invoco metodo
+                            break;
+                        case "3"://invoco metodo
+                            break;
+                    }
+                    break;
+                case "2":
+                    System.out.println("1. aggiungi");
+                    System.out.println("2. modifica");
+                    System.out.println("3. rimuovi");
+                    switch (input) {
 
 
-                case"2":// invoco metodo
-                    break;}
-            case "3":
-                System.out.println("1. import");
-                System.out.println("2. export");
+                        case "2":// invoco metodo
+                            break;
+                    }
+                case "3":
+                    System.out.println("1. import");
+                    System.out.println("2. export");
 
-                break;
-            case "4":
-                System.out.println("sei uscito dal programma");
-                System.exit(0);
-                break;
+                    break;
+                case "4":
+                    System.out.println("sei uscito dal programma");
+                    System.exit(0);
+                    break;
+            }
         }
     }
     public static String askInput()

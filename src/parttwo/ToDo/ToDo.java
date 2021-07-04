@@ -14,11 +14,13 @@ public class ToDo implements Serializable
     private String descrizione;
     protected LocalDate datadiinserimento;
     private LocalDate datascadenza;
-    private enum priorità{
+
+    public enum priorità{
         ALTA,
         MEDIA,
         BASSA,
     }
+
     private enum stato{
         DA_FARE,
         IN_ESECUZIONE,
@@ -63,6 +65,8 @@ public class ToDo implements Serializable
     public LocalDate getDatadiinserimento() { return datadiinserimento; }
 
     public LocalDate getDatascadenza() { return datascadenza; }
+
+
 
     public ToDo cloneForUpdate() {
         // fabbrica una copia esatta del To-Do (compreso l'ID)
