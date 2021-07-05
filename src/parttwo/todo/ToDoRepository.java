@@ -1,9 +1,6 @@
-package parttwo.ToDo;
-
-import com.sun.xml.internal.bind.v2.model.core.ID;
+package parttwo.todo;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.util.*;
 
 public class ToDoRepository implements Serializable {
@@ -22,11 +19,18 @@ public class ToDoRepository implements Serializable {
 
     private static ToDoRepository _repository = null;
 
+    public static ToDoRepository getToDoRepository() {
+        if(_repository == null) {
+            _repository = new ToDoRepository();
+        }
+        return _repository;
+    }
+
     //SERIALIZZIAZIONE
 
     public void serializefile() throws IOException {
 
-        String filename = "todolistfile";
+        String filename = "todolistfile.txt";
 
         try {
             //Saving of object in a file
@@ -65,10 +69,6 @@ public class ToDoRepository implements Serializable {
         return _repository;
     }
 
-    public static ToDoRepository getToDoRepository() {
-        return _repository;
-    }
-
     // aggiungere
     public void add(ToDo t) {
         _data.put(t.getId(), t);
@@ -91,18 +91,18 @@ public class ToDoRepository implements Serializable {
             } else {
                 System.out.println("il todo non c'è ");
             }
-
-            _data.put(t.getId(), t);
+            _data.replace(t.getId(), t);
         }
     }
-        //eliminare
-        public void delete (Long ID){
-            _data.remove(ID);
-        }
 
-        public List<ToDo> getToDoList () {
-            // restituisce lista di tutti i TO-DO esistenti
-            ArrayList<ToDo> todolist = new ArrayList<>(_data.values());
-            return todolist;
-        }
+    //eliminare
+    public void delete(Long ID) {
+        _data.remove(ID);
     }
+
+    public List<ToDo> getToDoList() {
+        // restituisce lista di tutti i TO-DO esistenti
+        ArrayList<ToDo> todolist = new ArrayList<>(_data.values());
+        return todolist;
+    }
+}

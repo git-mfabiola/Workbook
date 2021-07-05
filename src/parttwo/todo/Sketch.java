@@ -1,4 +1,4 @@
-package parttwo.ToDo;
+package parttwo.todo;
 
 public class Sketch {
     // TO DO List
