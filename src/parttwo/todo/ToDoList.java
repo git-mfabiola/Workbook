@@ -12,12 +12,12 @@ public class ToDoList {
     // Si appoggia a un metodo di ToDoRepository per avere una lista (= copia dei TO-DO
     // originali) dei TO-DO attualmente a sistema, cioè un ArrayList facilmente utilizzabile
 
-    private static ToDoRepository tdr = ToDoRepository.getToDoRepository();
-    private static List<ToDo> todolist = tdr.getToDoList();
 
-    public static void viewByPriority() {
+    public static void viewByPriority() throws Exception {
         // Questa funzione è chiamata qunado l'utente sceglie di visualizzare i dati per priorità...
 
+        ToDoRepository tdr = ToDoRepository.getToDoRepository();
+        List<ToDo> todolist = tdr.getToDoList();
 
         Comparator<ToDo> comparaPerPriorità = (ToDo t1, ToDo t2) -> t1.getPriorità().compareTo(t2.getPriorità());
 
@@ -33,7 +33,9 @@ public class ToDoList {
                         todo.getPriorità()));
     }
 
-    public static void viewByState() {
+    public static void viewByState() throws Exception{
+        ToDoRepository tdr = ToDoRepository.getToDoRepository();
+        List<ToDo> todolist = tdr.getToDoList();
         Comparator<ToDo> comparaPerStato = (ToDo t1, ToDo t2) -> t1.getStato().compareTo(t2.getStato());
 
         todolist.sort(comparaPerStato);
@@ -48,7 +50,10 @@ public class ToDoList {
                         todo.getStato()));
     }
 
-    public static void viewByDate() {
+    public static void viewByDate() throws Exception{
+        ToDoRepository tdr = ToDoRepository.getToDoRepository();
+        List<ToDo> todolist = tdr.getToDoList();
+
         Comparator<ToDo> comparaPerDataScadenza = (ToDo t1, ToDo t2) -> t1.getDatascadenza().compareTo(t2.getDatascadenza());
 
         todolist.sort(comparaPerDataScadenza);

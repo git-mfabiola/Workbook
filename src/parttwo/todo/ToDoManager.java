@@ -17,7 +17,7 @@ public class ToDoManager {
     // - ha al suo interno funzioni di controllo sull'input utente
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void createNewToDo() {
+    public static void createNewToDo() throws Exception{
         // chiedo al utente di inserire il to do
 
         String titolo = inserisciTitolo();
@@ -31,7 +31,7 @@ public class ToDoManager {
         ToDoRepository.getToDoRepository().add(td);
     }
 
-    public static void removeToDo() {
+    public static void removeToDo() throws Exception{
         System.out.println("Inserisci l'id da eliminare ");
         Long id = scanner.nextLong();
 
@@ -54,7 +54,7 @@ public class ToDoManager {
         }
     }
 
-    public static void updateToDo() {
+    public static void updateToDo() throws Exception {
         // Chiede quale Id si vuole modificare
         // Si chiede un "clone" del TO-DO
         // Loop di richiesta dati da modificare

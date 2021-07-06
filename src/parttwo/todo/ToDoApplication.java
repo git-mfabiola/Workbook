@@ -1,18 +1,22 @@
 package parttwo.todo;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class ToDoApplication {
 
-    public static void main(String[] args) {
-        ToDoRepository.getToDoRepository().add(new ToDo(1L,"Title 1", "Desc 1",LocalDate.now(), LocalDate.of(2021, 12, 1), ToDo.Priorità.BASSA, ToDo.Stato.IN_ESECUZIONE));
-        ToDoRepository.getToDoRepository().add(new ToDo(2L,"Title 2", "Desc 2",LocalDate.now(), LocalDate.of(2021, 9, 1), ToDo.Priorità.MEDIA, ToDo.Stato.ANNULLATA));
-        ToDoRepository.getToDoRepository().add(new ToDo(3L,"Title 3", "Desc 3",LocalDate.now(), LocalDate.of(2021, 11, 1), ToDo.Priorità.ALTA, ToDo.Stato.COMPLETATA));
-        ToDoRepository.getToDoRepository().add(new ToDo(4L,"Title 4", "Desc 4",LocalDate.now(), LocalDate.of(2021, 8, 1), ToDo.Priorità.BASSA, ToDo.Stato.IN_ESECUZIONE));
-        ToDoRepository.getToDoRepository().add(new ToDo(5L,"Title 5", "Desc 5",LocalDate.now(), LocalDate.of(2021, 10, 1), ToDo.Priorità.ALTA, ToDo.Stato.COMPLETATA));
+    public static void main(String[] args) throws Exception {
 
+        ToDoRepository.init("todolistfile.ser");
+        ToDoRepository r = ToDoRepository.getToDoRepository();
+//        ToDoRepository.getToDoRepository().add(new ToDo("Title 1", "Desc 1", LocalDate.of(2021, 12, 1), ToDo.Priorità.BASSA, ToDo.Stato.IN_ESECUZIONE));
+//        ToDoRepository.getToDoRepository().add(new ToDo("Title 2", "Desc 2", LocalDate.of(2021, 9, 1), ToDo.Priorità.MEDIA, ToDo.Stato.ANNULLATA));
+//        ToDoRepository.getToDoRepository().add(new ToDo("Title 3", "Desc 3", LocalDate.of(2021, 11, 1), ToDo.Priorità.ALTA, ToDo.Stato.COMPLETATA));
+//        ToDoRepository.getToDoRepository().add(new ToDo("Title 4", "Desc 4", LocalDate.of(2021, 8, 1), ToDo.Priorità.BASSA, ToDo.Stato.IN_ESECUZIONE));
+//        ToDoRepository.getToDoRepository().add(new ToDo("Title 5", "Desc 5", LocalDate.of(2021, 10, 1), ToDo.Priorità.ALTA, ToDo.Stato.COMPLETATA));
         menu();
+        r.serializefile();
     }
 
     // GRUPPO 3/4:
@@ -29,7 +33,7 @@ public class ToDoApplication {
 
     // 5. Fornisce anche i metodi della classe "lettore" di quiz... askForInput , display
     // Deserialization
-    public static void menu() {
+    public static void menu() throws Exception {
         boolean continua = true;
 
         while (continua) {
@@ -80,7 +84,15 @@ public class ToDoApplication {
                 case 3:
                     System.out.println("1. import");
                     System.out.println("2. export");
-
+                    input = askInput();
+                    switch (input) {
+                        case 1:
+                            ToDoImportExport.importToFile();
+                            break;
+                        case 2:
+                            ToDoImportExport.exportToFile();
+                            break;
+                    }
                     break;
                 case 4:
                     System.out.println("sei uscito dal programma");

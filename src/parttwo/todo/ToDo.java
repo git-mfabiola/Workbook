@@ -5,11 +5,8 @@ import java.time.LocalDate;
 
 public class ToDo implements Serializable
 {
-    // classe principale
-    // ...costruttore con ID incrementale...
 
     private Long id;
-    private Long idSeed = 0L;
     private String titolo;
     private String descrizione;
     private LocalDate datadiinserimento;
@@ -19,7 +16,6 @@ public class ToDo implements Serializable
 
     //costruttore
     public ToDo(String titolo, String descrizione, LocalDate datascadenza, Priorità priorità, Stato stato) {
-        this.id = getNewId();
         this.titolo = titolo;
         this.descrizione = descrizione;
         this.datadiinserimento = LocalDate.now();
@@ -27,22 +23,16 @@ public class ToDo implements Serializable
         this.priorità = priorità;
         this.stato = stato;
     }
-    //costruttore
 
-
-    public ToDo(Long id, String titolo, String descrizione, LocalDate datadiinserimento, LocalDate datascadenza, Priorità priorità, Stato stato) {
-        this.id = id;
-        this.titolo = titolo;
-        this.descrizione = descrizione;
-        this.datadiinserimento = datadiinserimento;
-        this.datascadenza = datascadenza;
-        this.priorità = priorità;
-        this.stato = stato;
-    }
-
-    protected long getNewId() {
-        return ++idSeed;
-    }
+//    public ToDo(Long id, String titolo, String descrizione, LocalDate datadiinserimento, LocalDate datascadenza, Priorità priorità, Stato stato) {
+//        this.id = id;
+//        this.titolo = titolo;
+//        this.descrizione = descrizione;
+//        this.datadiinserimento = datadiinserimento;
+//        this.datascadenza = datascadenza;
+//        this.priorità = priorità;
+//        this.stato = stato;
+//    }
 
     public Long getId() {
         return id;
@@ -102,7 +92,9 @@ public class ToDo implements Serializable
 
     public ToDo cloneForUpdate() {
         // fabbrica una copia esatta del To-Do (compreso l'ID)
-        ToDo nuovoTodo = new ToDo(this.id,this.titolo,this.descrizione,this.datadiinserimento,this.datascadenza, this.priorità, this.stato);
+        ToDo nuovoTodo = new ToDo(this.titolo,this.descrizione,this.datascadenza, this.priorità, this.stato);
+        nuovoTodo.setId(this.getId());
+        nuovoTodo.setDatadiinserimento(this.getDatadiinserimento());
         return nuovoTodo;
     }
 

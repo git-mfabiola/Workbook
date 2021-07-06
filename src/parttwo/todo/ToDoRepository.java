@@ -1,40 +1,49 @@
 package parttwo.todo;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class ToDoRepository implements Serializable {
-    /* GESTORE DELL'ARCHIVIO DEI TO-DO == DATABASE */
 
-    // Contiene una HashMap di tutti i TO-DO a sistema:
-    // - implementa il metodo di salvataggio su file
-    // - implementa il metodo di caricamento da file
-    // - metodi per individuare, aggiungere, eliminare un TO-DO
-    // - restituisce una copia di tutti i TO-DO come ArrayList, da
-    //   usare per le visualizzazioni di ToDoList
-    // Serializzabile con la funzione writeObject()
 
-    //Mappa _data
-    Map<Long, ToDo> _data = new HashMap<>();
+    private static boolean _init = false;               // flag che indica se il ToDoRepository è stato inizializzato
+    private static String _fileName;                    // file da usare per serializzazione/deserializzazione
+    private static ToDoRepository _repository = null;   // unica istanza del repository;
 
-    private static ToDoRepository _repository = null;
+    public static boolean init(String fileName) {
+        try {
+            Path p = Paths.get(fileName);
+            _fileName = p.toString();
+            _init = true;
+        } catch (InvalidPathException ipe) {
+            System.out.println(ipe.getMessage());
+        }
+        return _init;
+    }
 
-    public static ToDoRepository getToDoRepository() {
-        if(_repository == null) {
-            _repository = new ToDoRepository();
+    public static ToDoRepository getToDoRepository() throws Exception {
+        if (!_init) {
+            throw new Exception("ToDo Repository has not been initialized");
+        }
+        if (_repository == null) {
+            if (!Files.exists(Paths.get(_fileName)))
+                _repository = new ToDoRepository();
+            else
+                deserializeFile();
         }
         return _repository;
     }
 
     //SERIALIZZIAZIONE
-
     public void serializefile() throws IOException {
-
-        String filename = "todolistfile.txt";
 
         try {
             //Saving of object in a file
-            FileOutputStream file = new FileOutputStream("todolistfile.txt");
+            FileOutputStream file = new FileOutputStream(_fileName);
             ObjectOutputStream out = new ObjectOutputStream(file);
 
             // Method for serialization of object
@@ -48,13 +57,13 @@ public class ToDoRepository implements Serializable {
             System.out.println("IOException is caught");
         }
     }
-    //DESERIALIZZAZIONE
 
+    //DESERIALIZZAZIONE
     public static ToDoRepository deserializeFile() throws IOException {
         try {
 
             // Reading the object from a file
-            FileInputStream file = new FileInputStream("todolistfile.txt");
+            FileInputStream file = new FileInputStream(_fileName);
             ObjectInputStream in = new ObjectInputStream(file);
 
             // Method for deserialization of object
@@ -69,9 +78,19 @@ public class ToDoRepository implements Serializable {
         return _repository;
     }
 
+    private Map<Long, ToDo> _data = new HashMap<>();
+    private long _idseed;
+
+    private long getNewID() {
+        _idseed++;
+        return _idseed;
+    }
+
     // aggiungere
     public void add(ToDo t) {
-        _data.put(t.getId(), t);
+        long newID = getNewID();
+        t.setId(newID);
+        _data.put(newID, t);
     }
 
     //modificare
@@ -83,15 +102,12 @@ public class ToDoRepository implements Serializable {
 
         // controllo
         Set<Long> sl = _data.keySet();
-        Iterator<Long> longIter = sl.iterator();
+        sl.contains(t.getId());
 
-        while (longIter.hasNext()) {
-            if (longIter.next() == t.getId()) {
-                _data.put(t.getId(), t);
-            } else {
-                System.out.println("il todo non c'è ");
-            }
+        if (sl.contains(t.getId())) {
             _data.replace(t.getId(), t);
+        } else {
+            System.out.println("il todo non c'è ");
         }
     }
 
